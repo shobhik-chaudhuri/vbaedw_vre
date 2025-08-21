@@ -12,7 +12,7 @@ select trunc(sysdate) date_this_query_ran,
     END Rehab_Type,
 CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                     THEN 'Y' ELSE 'N' END ForeignCaseFlag,
@@ -57,7 +57,7 @@ group by trunc(sysdate),
     END,
 	CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                     THEN 'Y' ELSE 'N' END

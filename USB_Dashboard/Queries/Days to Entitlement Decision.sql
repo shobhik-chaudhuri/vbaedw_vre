@@ -141,7 +141,7 @@ WHERE
 */
 SELECT CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                     THEN 'Y' ELSE 'N' END ForeignCaseFlag,
@@ -176,7 +176,7 @@ WHERE
     AND D.FISCAL_YEAR = (SELECT fiscal_year FROM dw_dim.date_dim WHERE trunc(actual_date)=trunc(sysdate))
 GROUP BY CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                     THEN 'Y' ELSE 'N' END

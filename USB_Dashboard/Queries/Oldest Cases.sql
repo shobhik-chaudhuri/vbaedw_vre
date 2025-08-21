@@ -65,7 +65,7 @@ AND NOT EXISTS (SELECT 1 FROM dw_vre_dim.outbase_site_dim o
 		where o.current_record_ind='Y'
 		AND o.outbase_site_name in 
              			( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                		'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                		'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 		'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 		'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
 		and o.outbase_site_lctn_id = c.site_location_id)
@@ -141,7 +141,7 @@ INNER JOIN (select a.*, rank() over (partition by outbase_site_lctn_id order by 
                     and c.site_location_id=o.outbase_site_lctn_id
 			AND o.outbase_site_name in 
              			( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                		'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                		'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 		'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 		'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
 AND NOT (D.BENEFIT_CLAIM_STATUS_CODE = '002' and L.BENEFIT_CLAIM_STATUS_CODE = '007')

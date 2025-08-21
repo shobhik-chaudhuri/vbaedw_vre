@@ -2,7 +2,7 @@
 select G.ACTUAL_DATE,
         CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                     THEN 'Y' ELSE 'N' END ForeignCaseFlag,
@@ -41,7 +41,7 @@ LEFT OUTER join (select a.*, rank() over (partition by outbase_site_lctn_id orde
 group by G.ACTUAL_DATE,
             CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
             THEN 'Y' ELSE 'N' END,
