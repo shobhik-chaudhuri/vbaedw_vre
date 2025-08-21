@@ -57,7 +57,7 @@ SELECT actual_date,
 	p.paid_date,
     	CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                  THEN 'Y' ELSE 'N' END ForeignCaseFlag,
@@ -158,7 +158,7 @@ FROM
 	p.paid_date,
     	CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                  THEN 'Y' ELSE 'N' END ForeignCaseFlag,
@@ -259,7 +259,7 @@ FROM
 	p.paid_date,
     	CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                  THEN 'Y' ELSE 'N' END ForeignCaseFlag,
@@ -311,7 +311,7 @@ t_completed AS
 (
 select CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                  THEN 'Y' ELSE 'N' END ForeignCaseFlag,
@@ -341,7 +341,7 @@ LEFT OUTER join (select a.*, rank() over (partition by outbase_site_lctn_id orde
 WHERE D4.fiscal_year = (select distinct fiscal_year from dw_dim.date_dim where trunc(actual_date) = trunc(sysdate)) -- Current FY
 GROUP BY CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                  THEN 'Y' ELSE 'N' END,
@@ -437,7 +437,7 @@ FROM
 	p.paid_date,
     	CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                  THEN 'Y' ELSE 'N' END ForeignCaseFlag,
@@ -539,7 +539,7 @@ FROM
 	p.paid_date,
     	CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                  THEN 'Y' ELSE 'N' END ForeignCaseFlag,
@@ -639,7 +639,7 @@ FROM
 	p.paid_date,
     	CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                  THEN 'Y' ELSE 'N' END ForeignCaseFlag,
@@ -691,7 +691,7 @@ t_005_compl AS
 (
 select CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                  THEN 'Y' ELSE 'N' END ForeignCaseFlag,
@@ -724,7 +724,7 @@ LEFT OUTER join (select a.*, rank() over (partition by outbase_site_lctn_id orde
 WHERE D4.fiscal_year = (select distinct fiscal_year from dw_dim.date_dim where trunc(actual_date) = trunc(sysdate)) -- Current FY
 GROUP BY CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
-                'Kuala Lumpur','Kure Island','Laos','Malaysia' ,'Manila','Manila RO',
+                'Kuala Lumpur, Malaysia','Kure Island','Laos','Manila','Manila RO',
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                  THEN 'Y' ELSE 'N' END,
