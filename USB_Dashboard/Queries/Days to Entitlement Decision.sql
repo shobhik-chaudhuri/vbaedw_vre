@@ -68,7 +68,7 @@ AND c.ENTLMT_DETERMINATION_DT BETWEEN
         AND
         trunc(sysdate);
         
-/* Luke's query */
+/* Query 3 - Luke's query */
 SELECT
     F.CASE_ID,
     D2.ACTUAL_DATE AS APP_DATE,
@@ -104,7 +104,7 @@ WHERE
     AND D.FISCAL_YEAR = '2025'
 ;
 
-/* Days to entitlement - current FY 
+/* Query 4 - Days to entitlement - current FY 
 -- Only cases that went from Applicant to Eval
 */
 SELECT count(f.case_id) num_cases_eval_curr_fy,
@@ -136,8 +136,9 @@ WHERE
     AND D.FISCAL_YEAR = (SELECT fiscal_year FROM dw_dim.date_dim WHERE trunc(actual_date)=trunc(sysdate))
 ;
 
-/* Days to entitlement - current FY 
+/* Query 5 : Days to entitlement - current FY 
 -- Adding Foreign Case Flag
+-- Adding Total Days to Entitlement
 */
 SELECT CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
@@ -146,6 +147,7 @@ SELECT CASE WHEN o.outbase_site_name in
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                     THEN 'Y' ELSE 'N' END ForeignCaseFlag,
         count(f.case_id) num_cases_eval_curr_fy,
+        sum(D.ACTUAL_DATE - D2.ACTUAL_DATE) AS TOTAL_DAYS_TO_ENTITLEMENT,
         round(avg(D.ACTUAL_DATE - D2.ACTUAL_DATE),2) AS AVG_DAYS_TO_ENTITLEMENT
 FROM DW_VRE.VRE_CASE_STATUS_FACT F 
 INNER JOIN DW_DIM.BENEFIT_CLAIM_STATUS_DIM S 
@@ -182,8 +184,9 @@ GROUP BY CASE WHEN o.outbase_site_name in
                     THEN 'Y' ELSE 'N' END
 ;
 
-/* Days to entitlement - last 30 days
+/* Query 6 : Days to entitlement - last 30 days
 -- Adding Foreign Case Flag
+-- Adding Total Days to Entitlement
 */
 SELECT CASE WHEN o.outbase_site_name in 
              ( 'Australia','China','Foreign Workload','Guam','Indonesia','Japan','Korea',
@@ -191,8 +194,9 @@ SELECT CASE WHEN o.outbase_site_name in
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                     THEN 'Y' ELSE 'N' END ForeignCaseFlag,
-        count(f.case_id) num_cases_eval_curr_fy,
-        round(avg(D.ACTUAL_DATE - D2.ACTUAL_DATE),2) AS AVG_DAYS_TO_ENTITLEMENT
+        count(f.case_id) num_cases_eval_last_30_days,
+        sum(D.ACTUAL_DATE - D2.ACTUAL_DATE) AS TOTAL_DAYS_TO_ENTITLEMENT,
+        avg(D.ACTUAL_DATE - D2.ACTUAL_DATE) AS AVG_DAYS_TO_ENTITLEMENT
 FROM DW_VRE.VRE_CASE_STATUS_FACT F 
 INNER JOIN DW_DIM.BENEFIT_CLAIM_STATUS_DIM S 
     ON S.BENEFIT_CLAIM_STATUS_DIM_SID = F.CASE_STATUS_CODE_DIM_SID
@@ -226,4 +230,37 @@ GROUP BY CASE WHEN o.outbase_site_name in
                 'Mayaguez','Micronesia','New Zealand','Okinawa','Palau','Saipan',
                 'Samoa','Sepulveda','Sepulveda VA Clinic','Singapore','Taiwan','Thailand','Vancouver','Vietnam')
                     THEN 'Y' ELSE 'N' END
+;
+
+
+/* Query 7: Days to entitlement - last 30 days
+-- WITHOUT Foreign Case Flag
+-- Adding Total Days to Entitlement
+-- Use for VALIDATION ONLY
+*/
+SELECT count(f.case_id) num_cases_eval_last_30_days,
+        sum(D.ACTUAL_DATE - D2.ACTUAL_DATE) AS TOTAL_DAYS_TO_ENTITLEMENT,
+        round(avg(D.ACTUAL_DATE - D2.ACTUAL_DATE),2) AS AVG_DAYS_TO_ENTITLEMENT
+FROM DW_VRE.VRE_CASE_STATUS_FACT F 
+INNER JOIN DW_DIM.BENEFIT_CLAIM_STATUS_DIM S 
+    ON S.BENEFIT_CLAIM_STATUS_DIM_SID = F.CASE_STATUS_CODE_DIM_SID
+    AND S.BENEFIT_CLAIM_STATUS_CODE = '002'
+INNER JOIN DW_DIM.BENEFIT_CLAIM_STATUS_DIM S1
+    ON S1.BENEFIT_CLAIM_STATUS_DIM_SID = F.PREVIOUS_CASE_STATUS_CODE_SID
+    AND S1.BENEFIT_CLAIM_STATUS_CODE = '001'
+INNER JOIN DW_DIM.DATE_DIM D 
+    ON D.DATE_DIM_SID = F.CASE_STATUS_ENTRY_DATE_SID
+INNER JOIN DW_DIM.DATE_DIM D1 
+    ON D1.DATE_DIM_SID = F.CASE_STATUS_CLOSE_DATE_SID
+INNER JOIN DW_DIM.DATE_DIM D2
+    ON D2.DATE_DIM_SID = F.PREV_CASE_STATUS_ENTRY_DT_SID
+INNER JOIN DW_VRE_DIM.CASE_DIM C
+    ON C.CASE_DIM_SID = F.CASE_DIM_SID
+--AND C.PROGRAM_TYPE_CODE IN ('CH31', 'NDAA')
+    AND C.PROGRAM_TYPE_CODE IN ('CH18','CH31','CH35') -- Match USB VRE Dashboard
+INNER JOIN DW_DIM.VA_STATION_DIM V
+    ON V.VA_STATION_DIM_SID = F.CASE_ASGNMT_STATUS_VA_STN_SID
+WHERE
+    F.EFFECTIVE_STATUS_IND_DIM_SID <> 3
+	AND trunc(d.actual_date) between trunc(sysdate-30) and trunc(sysdate)
 ;
